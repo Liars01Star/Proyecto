@@ -66,5 +66,24 @@ class carpeta:
         print((" " * nivel) + self.nombre)
         for sub in self.subcarpetas:
             sub.listar(nivel + 1)
+    
+    
+if __name__ == "__main__":
+    from mensaje import mensaje
 
-            
+#Agrega el mensaje
+    c = carpeta("Principal")
+    m1 = mensaje("juan@mail.com", "rodrigo@mail.com", "Informe", "Detalles de nuestro ultimo mes")
+    c.agregar_mensaje(m1)
+    print("Mensajes en carpeta:", [m.asunto for m in c.mensajes])
+
+#Crea la subcarpeta y mueve el mensaje
+    sub = c.agregar_subcarpeta("Archivados")
+    if c.mover_mensaje(m1, sub):
+        print("Mensaje movido a subcarpeta:", sub.nombre)
+        print(f"Mensajes en subcarpeta: '{sub.nombre}':", [m.asunto for m in sub.mensajes])
+
+#Busqueda de mensajes
+    resultados = c.buscar(remitente="juan@mail.com")
+    print("Resultados de búsqueda por remitente 'juan':", [m.asunto for m in resultados])
+
