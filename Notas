@@ -23,4 +23,11 @@ Marcos.- cree la class carpeta, pudiendo enviar mensajes de un correo hacia otro
          agregue dentro de la class usuario def recibir el codigo self.bandeja.agregar_mensaje(msg) para asi poder enviarlos
 Marcos.- cree mas funciones dentro de la class carpeta, agregue opciones al menu para poder interactuar con estas funciones y se pueden mover correctamente mensajes de una carpeta a otra 
         cabe recalcar que el menu creado no es el definitivo, se creara un submenu para una mejor interaccion con el mismo por el momento queda todo sobre el mismo
-16/10
+
+01/11
+
+Ian.- Termine de modulizar las clases de manera solicitada
+Ian.- Se emprolijo el menu, diviendose en dos partes, el menu_sesion (donde se realiza el registro e inicio de sesion) y menu_principal, optimizando el funcionamiento del mismo y evitando que solicite una autenticación con cada función
+Ian.- Realize tambien una pequeña infografia mejor y mas prolija, también tiene un diagrama de flujo, luego realizare el diagrama de clases.
+
+
