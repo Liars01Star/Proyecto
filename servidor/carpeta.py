@@ -67,4 +67,42 @@ class carpeta:
         for sub in self.subcarpetas:
             sub.listar(nivel + 1)
 
-            
+    def orden_prioridad(self):
+        prioridad_3 = ["urgente", "emergencia", "server"]
+        prioridad_2 = ["reunion", "aviso", "cliente"]
+        prioridad_1 = ["info", "recordatorio", "cuando puedas"]
+
+        for msg in self.mensajes:
+            asunto = msg.asunto.lower()
+            prioridad = 0
+
+            for palabra in prioridad_1:
+                if palabra in asunto:
+                    prioridad = 1
+                    break;
+            for palabra in prioridad_2:
+                if palabra in asunto:
+                    prioridad = 2
+                    break;
+            for palabra in prioridad_3:
+                if palabra in asunto:
+                    prioridad = 3
+                    break;
+            msg.prioridad = prioridad
+        self.mensajes.sort(key=lambda m: m.prioridad, reverse=True)
+        print("\n--- Después de ordenar ---")
+        for m in self.mensajes:
+            print(m.asunto, m.prioridad)
+
+    
+        
+        
+
+
+        
+
+
+
+
+
+    

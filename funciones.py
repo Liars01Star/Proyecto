@@ -1,9 +1,12 @@
 from servidor.mensaje import mensaje
 from servidor.usuarios import usuarios
+from servidor.servidor_correo import envio_automatico
+
 
 class funciones_usuario:
-    def __init__(self):
+    def __init__(self,servidores=None):
         self.usuarios = []
+        self.servidores = servidores
 
     def inicio_sesion(self):
         correo = input("Ingresa tu correo: ")
@@ -11,7 +14,7 @@ class funciones_usuario:
 
         for u in self.usuarios:
             if u.email == correo and u.existente(contraseña):
-                print("\n¡Bienvenido al sistema de correos!\n")
+                print("\nMenu principal\n")
                 return u
         print("\nUsuario o contraseña incorrectos.\n")
         return None
@@ -21,13 +24,21 @@ class funciones_usuario:
         contraseña = input("Ingresa tu contraseña: ")
         email = input("Ingresa tu correo: ")
 
+        servidor_destino = input("Servidor donde registrar (s1, s2, s3, s4): ").strip()
+        if servidor_destino not in self.servidores:
+            print("Servidor inexistente, se usará s1 por defecto.")
+            servidor_destino = "s1"
+
         for u in self.usuarios:
             if u.nombre == nombre:
                 print("\nUsuario ya existente, probá con otro correo\n")
                 return
+
         nuevo_usuario = usuarios(nombre, contraseña, email)
         self.usuarios.append(nuevo_usuario)
-        print(f"\n{nombre} ingresó correctamente.\n")
+
+        self.servidores[servidor_destino].agregar_usuario(nuevo_usuario)
+        print(f"\n{nombre} fue registrado en el servidor {servidor_destino} correctamente.\n")
 
     def listar_usuarios(self):
         if not self.usuarios:
@@ -58,7 +69,7 @@ class funciones_usuario:
     def ver_bandeja_completa(self, usuario):
         def mostrar(carpeta, nivel=0):
             espacio = "  " * nivel
-            print(f"\n{espacio}📁 {carpeta.nombre}")
+            print(f"\n{espacio} {carpeta.nombre}")
             if not carpeta.mensajes:
                 print(f"{espacio}  (Sin mensajes)")
             else:
@@ -68,7 +79,7 @@ class funciones_usuario:
                     print(f"{espacio}     Cuerpo: {msg.cuerpo}\n")
             for sub in carpeta.subcarpetas:
                 mostrar(sub, nivel + 1)
-
+                        
         print("\n Bandeja de entrada:")
         mostrar(usuario.bandeja)
 
@@ -120,7 +131,7 @@ class funciones_usuario:
         else:
             print(f"\nResultados ({len(resultados)}):")
             for m in resultados:
-                print(f"- {m.asunto}  (De: {m.remitente})")
+                print(f"- {m.asunto}  (De: {m.remitente}) [Prioridad: {m.prioridad}]")
 
     def ver_raiz(self, usuario):
         mensajes = usuario.bandeja.mensajes
@@ -129,7 +140,7 @@ class funciones_usuario:
         else:
             print("\nMensajes en la carpeta raíz:")
             for m in mensajes:
-                print(f"Asunto: {m.asunto}\nCuerpo: {m.cuerpo}\n")
+                print(f"Asunto: {m.asunto}\n Prioridad: {m.prioridad}\n Cuerpo: {m.cuerpo}\n")
 
     def cerrar_sesion(self, usuario):
         print(f"\nSesión de {usuario.nombre} finalizada.")
