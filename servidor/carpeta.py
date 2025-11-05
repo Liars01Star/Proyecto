@@ -68,9 +68,9 @@ class carpeta:
             sub.listar(nivel + 1)
 
     def orden_prioridad(self):
-        prioridad_1 = ["urgente", "emergencia", "server"]
+        prioridad_3 = ["urgente", "emergencia", "server"]
         prioridad_2 = ["reunion", "aviso", "cliente"]
-        prioridad_3 = ["info", "recordatorio", "cuando puedas"]
+        prioridad_1 = ["info", "recordatorio", "cuando puedas"]
 
         for msg in self.mensajes:
             asunto = msg.asunto.lower()
@@ -78,7 +78,7 @@ class carpeta:
 
             for palabra in prioridad_1:
                 if palabra in asunto:
-                    prioridad = 3
+                    prioridad = 1
                     break;
             for palabra in prioridad_2:
                 if palabra in asunto:
@@ -86,7 +86,7 @@ class carpeta:
                     break;
             for palabra in prioridad_3:
                 if palabra in asunto:
-                    prioridad = 1
+                    prioridad = 3
                     break;
             msg.prioridad = prioridad
         self.mensajes.sort(key=lambda m: m.prioridad, reverse=True)

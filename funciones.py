@@ -14,7 +14,7 @@ class funciones_usuario:
 
         for u in self.usuarios:
             if u.email == correo and u.existente(contraseña):
-                print("\n¡Bienvenido al sistema de correos!\n")
+                print("\nMenu principal\n")
                 return u
         print("\nUsuario o contraseña incorrectos.\n")
         return None
@@ -79,7 +79,7 @@ class funciones_usuario:
                     print(f"{espacio}     Cuerpo: {msg.cuerpo}\n")
             for sub in carpeta.subcarpetas:
                 mostrar(sub, nivel + 1)
-        usuario.bandeja.orden_prioridad()
+                        
         print("\n Bandeja de entrada:")
         mostrar(usuario.bandeja)
 
@@ -131,7 +131,7 @@ class funciones_usuario:
         else:
             print(f"\nResultados ({len(resultados)}):")
             for m in resultados:
-                print(f"- {m.asunto}  (De: {m.remitente})")
+                print(f"- {m.asunto}  (De: {m.remitente}) [Prioridad: {m.prioridad}]")
 
     def ver_raiz(self, usuario):
         mensajes = usuario.bandeja.mensajes
@@ -140,7 +140,7 @@ class funciones_usuario:
         else:
             print("\nMensajes en la carpeta raíz:")
             for m in mensajes:
-                print(f"Asunto: {m.asunto}\nCuerpo: {m.cuerpo}\n")
+                print(f"Asunto: {m.asunto}\n Prioridad: {m.prioridad}\n Cuerpo: {m.cuerpo}\n")
 
     def cerrar_sesion(self, usuario):
         print(f"\nSesión de {usuario.nombre} finalizada.")

@@ -10,7 +10,7 @@ class menu:
 
     def menu_sesion(self):
         while not self.usuario_actual:
-            print("Bienvenido al sistema de correo, ¿que desea hacer?")
+            print("¡Bienvenido al sistema de correo!, ¿que desea hacer?")
             print("1) Iniciar sesión")
             print("2) Crear usuario")
             print("3) Lista de usuario")
@@ -45,10 +45,9 @@ class menu:
             print("4) Mover mensaje a subcarpeta")
             print("5) Buscar bandeja")
             print("6) Ver mensajes de la carpeta")
-            print("7) Cerrar sesión")
-            print("8) reglas de ordenamiento")
-            print("9) mensajes prioritarios")
-            print("0) Salir\n")
+            print("7) reglas de ordenamiento")
+            print("8) mensajes prioritarios")
+            print("0) Cerrar sesión")
 
             opcion = input("opcion: ")
 
@@ -65,14 +64,13 @@ class menu:
             elif opcion == "6":
                 self.fu.ver_raiz(self.usuario_actual)
             elif opcion == "7":
-                print(f"\nSesión de {self.usuario_actual.nombre} finalizada.")
-                self.usuario_actual = self.fu.cerrar_sesion(self.usuario_actual)
-            elif opcion == "8":
                 self.menu_reglas()
-            elif opcion == "9":
+            elif opcion == "8":
                 self.menu_cola()
             elif opcion == "0":
-                break
+                self.usuario_actual = self.fu.cerrar_sesion(self.usuario_actual)
+            else:
+                print("opcion invalida.")
     
     def menu_reglas(self):
         if not self.usuario_actual:
@@ -122,7 +120,14 @@ class menu:
                 break
             else:
                 print("opcion invalida.")
+
     def menu_cola(self):
+        self.usuario_actual.bandeja.orden_prioridad()
+        self.usuario_actual.vaciar_cola()
+        for msg in self.usuario_actual.bandeja.mensajes:
+            self.usuario_actual.encolar(msg)
+
+        
         while True:
             print("\n---mensajes prioritarios---")
             print("1) Atender siguiente")
@@ -150,7 +155,7 @@ class menu:
             print("\nNo hay mensaje en prioridad.")
             return
         print("\n== SIGUIENTE MENSAJE ==")
-        print(msg.resumen() if hasattr(msg, "resumen") else f"{msg.asunto} (de {msg.remitente})")
+        print(msg.resumen())
         if hasattr(msg, "marcar_leido"):
             msg.marcar_leido()
 
@@ -160,7 +165,7 @@ class menu:
             print("\nNo hay mensajes en la cola.")
             return
         print("\n== PRÓXIMO EN COLA ==")
-        print(msg.resumen() if hasattr(msg, "resumen") else f"{msg.asunto} (de {msg.remitente})")
+        print(msg.resumen())
 
     def cola_tamaño(self):
         print(f"\nMensajes en cola: {self.usuario_actual.tamaño_cola()}")
