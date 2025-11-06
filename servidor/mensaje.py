@@ -30,3 +30,17 @@ class mensaje:
         self.traza_ruta.append(servidor)
     def resumen(self):
         return f"[prio {self.prioridad}] {self.asunto} (de {self.remitente})"
+
+if __name__ == "__main__":
+    from mensaje import mensaje
+
+    mensaje = mensaje(
+        asunto="Urgente",
+        cuerpo="reunion de ejecutivos a las 11",
+        remitente="ejecutivoficticio@mail.com",
+        destinatario="ejecutivo2@mail.com"
+    )
+
+    print("Asunto:", mensaje.asunto)
+    print("Cuerpo:", mensaje.cuerpo)
+    print("Remitente:", mensaje.remitente)
